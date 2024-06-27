@@ -4,8 +4,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import imageTobase64 from "../helpers/imageTobase64";
-// import SummaryApi from "../common";
-// import { toast } from "react-toastify";
+import SummaryApi from "../common";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +17,7 @@ const SignUp = () => {
     confirmPassword: "",
     profilePic: "",
   });
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -46,28 +46,29 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (data.password === data.confirmPassword) {
-    //   const dataResponse = await fetch(SummaryApi.signUP.url, {
-    //     method: SummaryApi.signUP.method,
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
+    if (data.password === data.confirmPassword) {
+      const dataResponse = await fetch(SummaryApi.signUP.url, {
+        method: SummaryApi.signUP.method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    //   const dataApi = await dataResponse.json();
+      const dataApi = await dataResponse.json();
+      console.log(dataApi);
 
-    //   if (dataApi.success) {
-    //     toast.success(dataApi.message);
-    //     navigate("/login");
-    //   }
+      if (dataApi.success) {
+        toast.success(dataApi.message);
+        navigate("/login");
+      }
 
-    //   if (dataApi.error) {
-    //     toast.error(dataApi.message);
-    //   }
-    // } else {
-    //   toast.error("Please check password and confirm password");
-    // }
+      if (dataApi.error) {
+        toast.error(dataApi.message);
+      }
+    } else {
+      toast.error("Please check password and confirm password");
+    }
   };
 
   return (
