@@ -8,16 +8,24 @@ import Footer from "./components/Footer";
 import { useEffect } from "react";
 import SummaryApi from "./common";
 import Context from "./context";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "./store/userSlice";
 
 function App() {
+  const dispatch = useDispatch();
   const fetchUserDetails = async () => {
     const dataResponse = await fetch(SummaryApi.current_user.url, {
       method: SummaryApi.current_user.method,
       credentials: "include",
     });
     const dataApi = await dataResponse.json();
-    console.log("user-data", dataApi);
+
+    if (dataApi.success) {
+      dispatch(setUserDetails(dataApi.data));
+    }
+    // console.log("user-data", dataApi.data);
   };
+
   useEffect(() => {
     fetchUserDetails();
   }, []);
