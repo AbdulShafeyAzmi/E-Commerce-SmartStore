@@ -1,12 +1,13 @@
-import { Outlet, json } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import "./App.css";
 
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { useEffect } from "react";
 import SummaryApi from "./common";
+import Context from "./context";
 
 function App() {
   const fetchUserDetails = async () => {
@@ -22,12 +23,18 @@ function App() {
   }, []);
   return (
     <>
-      <ToastContainer />
-      <Header />
-      <main className="min-h-[calc(100vh-120px)] pt-16">
-        <Outlet />
-      </main>
-      <Footer />
+      <Context.Provider
+        value={{
+          fetchUserDetails, //User details fetch
+        }}
+      >
+        <ToastContainer />
+        <Header />
+        <main className="min-h-[calc(100vh-120px)] pt-16">
+          <Outlet />
+        </main>
+        <Footer />
+      </Context.Provider>
     </>
   );
 }
