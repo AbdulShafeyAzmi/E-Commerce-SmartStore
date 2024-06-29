@@ -14,7 +14,7 @@ async function authToken(req, res, next) {
     }
 
     jwt.verify(token, process.env.SECRET_KEY, function (err, decoded) {
-      console.log(err);
+      //console.log(err);
       // console.log("decoded", decoded);
 
       if (err) {
