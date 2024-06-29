@@ -73,7 +73,7 @@ const Header = () => {
                 <nav>
                   <Link
                     to={"admin-panel"}
-                    className=" whitespace-nowrap hover:bg-slate-100"
+                    className=" whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
                   >
                     Admin Panel
                   </Link>
