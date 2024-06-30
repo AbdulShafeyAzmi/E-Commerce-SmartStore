@@ -17,14 +17,14 @@ async function signinController(req, res) {
       throw new Error("User not found! ");
     }
 
-    const checkPassword = bcrypt.compare(password, user.password);
+    const checkPassword = await bcrypt.compare(password, user.password);
 
     if (checkPassword) {
       const tokenData = {
         _id: user._id,
         email: user.email,
       };
-      const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
+      const token = await jwt.sign(tokenData, process.env.SECRET_KEY, {
         expiresIn: 60 * 60 * 8,
       });
 
