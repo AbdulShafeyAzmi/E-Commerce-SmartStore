@@ -5,6 +5,8 @@ import { MdDelete } from "react-icons/md";
 import productCategory from "../helpers/productCategory";
 import uploadImage from "../helpers/uploadImage";
 import DisplayImage from "./DisplayImage";
+import SummaryApi from "../common/index";
+import { toast } from "react-toastify";
 
 const UploadProduct = ({ onClose }) => {
   const [data, setData] = useState({
@@ -62,7 +64,27 @@ const UploadProduct = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Data", data);
+    // console.log("Data", data);
+    const response = await fetch(SummaryApi.uploadProduct.url, {
+      method: SummaryApi.uploadProduct.method,
+      credentials: "include",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.success) {
+      toast.success(responseData?.message);
+      onClose();
+      //fetchData();
+    }
+
+    if (responseData.error) {
+      toast.error(responseData?.message);
+    }
   };
 
   return (

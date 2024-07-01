@@ -8,6 +8,7 @@ const authToken = require("../middleware/authToken");
 const userLogout = require("../controller/user/userLogout");
 const allUsers = require("../controller/user/allUsers");
 const updateUser = require("../controller/user/updateUser");
+const UploadProductController = require("../controller/product/uploadProduct");
 
 router.post("/signup", userSignUpController);
 router.post("/signin", signinController);
@@ -17,5 +18,8 @@ router.get("/userLogout", userLogout);
 //Admin Panel
 router.get("/all-user", authToken, allUsers);
 router.post("/update-user", authToken, updateUser);
+
+//Product
+router.post("/upload-product", authToken, UploadProductController);
 
 module.exports = router;
