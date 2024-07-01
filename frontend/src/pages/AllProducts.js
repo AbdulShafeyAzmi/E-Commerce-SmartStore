@@ -48,7 +48,7 @@ const AllProducts = () => {
       {openUploadProduct && (
         <UploadProduct
           onClose={() => setOpenUploadProduct(false)}
-          // fetchData={fetchAllProduct}
+          fetchData={fetchAllProduct}
         />
       )}
     </div>

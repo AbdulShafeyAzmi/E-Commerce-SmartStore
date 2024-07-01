@@ -8,7 +8,7 @@ import DisplayImage from "./DisplayImage";
 import SummaryApi from "../common/index";
 import { toast } from "react-toastify";
 
-const UploadProduct = ({ onClose }) => {
+const UploadProduct = ({ onClose, fetchData }) => {
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -34,11 +34,11 @@ const UploadProduct = ({ onClose }) => {
   };
 
   const handleUploadProduct = async (e) => {
-    console.log(e.target.files);
+    //console.log(e.target.files);
     const file = e.target.files[0];
     const uploadImageCloudinary = await uploadImage(file);
 
-    console.log("Image", uploadImageCloudinary);
+    //console.log("Image", uploadImageCloudinary);
 
     setData((preve) => {
       return {
@@ -49,7 +49,7 @@ const UploadProduct = ({ onClose }) => {
   };
 
   const handleDeleteProductImage = async (index) => {
-    console.log("image index", index);
+    //console.log("image index", index);
 
     const newProductImage = [...data.productImage];
     newProductImage.splice(index, 1);
@@ -79,7 +79,7 @@ const UploadProduct = ({ onClose }) => {
     if (responseData.success) {
       toast.success(responseData?.message);
       onClose();
-      //fetchData();
+      fetchData();
     }
 
     if (responseData.error) {
