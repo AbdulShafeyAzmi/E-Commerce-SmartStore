@@ -18,7 +18,13 @@ async function authToken(req, res, next) {
       // console.log("decoded", decoded);
 
       if (err) {
-        console.log("error auth", err);
+        if (err.name === "TokenExpiredError") {
+          return res.status(401).json({
+            message: "Session expired. Please log in again.",
+            error: true,
+            success: false,
+          });
+        }
       }
 
       req.userId = decoded?._id;
