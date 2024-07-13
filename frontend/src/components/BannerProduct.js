@@ -11,14 +11,12 @@ import image3Mobile from "../assest/banner/img3_mobile.jpg";
 import image4Mobile from "../assest/banner/img4_mobile.jpg";
 import image5Mobile from "../assest/banner/img5_mobile.png";
 
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 const BannerProduct = () => {
   const [currentImage, setCurrentImage] = useState(0);
 
   const desktopImages = [image1, image2, image3, image4, image5];
-
   const mobileImages = [
     image1Mobile,
     image2Mobile,
@@ -28,36 +26,25 @@ const BannerProduct = () => {
   ];
 
   const nextImage = () => {
-    // if (desktopImages.length - 1 > currentImage) {
-    //   setCurrentImage((preve) => preve + 1);
-    // }
     setCurrentImage((prevIndex) => (prevIndex + 1) % desktopImages.length);
   };
 
   const preveImage = () => {
-    if (currentImage === 0) setCurrentImage(desktopImages.length - 1);
-    if (currentImage != 0) {
-      setCurrentImage((preve) => preve - 1);
-    }
+    setCurrentImage((prevIndex) =>
+      prevIndex === 0 ? desktopImages.length - 1 : prevIndex - 1
+    );
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (desktopImages.length - 1 > currentImage) {
-        nextImage();
-      } else {
-        setCurrentImage(0);
-      }
-    }, 5000);
-
+    const interval = setInterval(nextImage, 5000);
     return () => clearInterval(interval);
-  }, [currentImage]);
+  }, []);
 
   return (
-    <div className="container mx-auto px-4 rounded ">
+    <div className="container mx-auto px-4 rounded">
       <div className="h-56 md:h-72 w-full bg-slate-200 relative">
-        <div className="absolute z-10 h-full w-full md:flex items-center hidden ">
-          <div className=" flex justify-between w-full text-2xl">
+        <div className="absolute z-10 h-full w-full md:flex items-center hidden">
+          <div className="flex justify-between w-full text-2xl">
             <button
               onClick={preveImage}
               className="bg-white shadow-md rounded-full p-1"
@@ -73,34 +60,38 @@ const BannerProduct = () => {
           </div>
         </div>
 
-        {/**desktop and tablet version */}
+        {/** Desktop and tablet version */}
         <div className="hidden md:flex h-full w-full overflow-hidden">
-          {desktopImages.map((imageURl, index) => {
-            return (
-              <div
-                className="w-full h-full min-w-full min-h-full transition-all"
-                key={imageURl}
-                style={{ transform: `translateX(-${currentImage * 100}%)` }}
-              >
-                <img src={imageURl} className="w-full h-full" />
-              </div>
-            );
-          })}
+          {desktopImages.map((imageUrl, index) => (
+            <div
+              className="w-full h-full min-w-full min-h-full transition-all"
+              key={index}
+              style={{ transform: `translateX(-${currentImage * 100}%)` }}
+            >
+              <img
+                src={imageUrl}
+                className="w-full h-full"
+                alt={`Slide ${index + 1}`}
+              />
+            </div>
+          ))}
         </div>
 
-        {/**mobile version */}
+        {/** Mobile version */}
         <div className="flex h-full w-full overflow-hidden md:hidden">
-          {mobileImages.map((imageURl, index) => {
-            return (
-              <div
-                className="w-full h-full min-w-full min-h-full transition-all"
-                key={imageURl}
-                style={{ transform: `translateX(-${currentImage * 100}%)` }}
-              >
-                <img src={imageURl} className="w-full h-full object-cover" />
-              </div>
-            );
-          })}
+          {mobileImages.map((imageUrl, index) => (
+            <div
+              className="w-full h-full min-w-full min-h-full transition-all"
+              key={index}
+              style={{ transform: `translateX(-${currentImage * 100}%)` }}
+            >
+              <img
+                src={imageUrl}
+                className="w-full h-full object-cover"
+                alt={`Slide ${index + 1}`}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>
