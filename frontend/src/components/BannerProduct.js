@@ -28,12 +28,14 @@ const BannerProduct = () => {
   ];
 
   const nextImage = () => {
-    if (desktopImages.length - 1 > currentImage) {
-      setCurrentImage((preve) => preve + 1);
-    }
+    // if (desktopImages.length - 1 > currentImage) {
+    //   setCurrentImage((preve) => preve + 1);
+    // }
+    setCurrentImage((prevIndex) => (prevIndex + 1) % desktopImages.length);
   };
 
   const preveImage = () => {
+    if (currentImage === 0) setCurrentImage(desktopImages.length - 1);
     if (currentImage != 0) {
       setCurrentImage((preve) => preve - 1);
     }
