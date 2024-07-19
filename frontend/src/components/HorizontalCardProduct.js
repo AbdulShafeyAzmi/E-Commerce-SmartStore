@@ -22,6 +22,7 @@ const HorizontalCardProduct = ({ category, heading }) => {
   const { fetchUserAddToCart } = useContext(Context);
 
   const handleAddToCart = async (e, id) => {
+    e.preventDefault(); // Prevent Link click
     await addToCart(e, id);
     fetchUserAddToCart();
   };
