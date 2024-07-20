@@ -51,7 +51,7 @@ const ProductDetails = () => {
     setActiveImage(dataReponse?.data?.productImage[0]);
   };
 
-  console.log("data", data);
+  // console.log("data", data);
 
   useEffect(() => {
     fetchProductDetails();
