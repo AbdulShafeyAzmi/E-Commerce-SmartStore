@@ -52,10 +52,13 @@ const HorizontalCardProduct = ({ category, heading }) => {
   }, [scrollElement]);
 
   return (
-    <div className="container mx-auto px-4 my-6 relative">
+    <div className="container mx-auto px-4 my-6 relative ">
       <h2 className="text-2xl font-semibold py-4">{heading}</h2>
 
-      <div className="relative">
+      <div
+        className="flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-none transition-all"
+        ref={scrollElement}
+      >
         <button
           className="bg-white shadow-md rounded-full p-1 absolute left-0 text-lg hidden md:block"
           onClick={scrollLeft}
@@ -69,16 +72,10 @@ const HorizontalCardProduct = ({ category, heading }) => {
           <FaAngleRight />
         </button>
 
-        <div
-          className="flex items-center gap-4 md:gap-6 overflow-x-auto scrollbar-none transition-all"
-          ref={scrollElement}
-        >
-          {loading
-            ? loadingList.map((_, index) => (
-                <div
-                  key={index}
-                  className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex"
-                >
+        {loading
+          ? loadingList.map((product, index) => {
+              return (
+                <div className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex">
                   <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse"></div>
                   <div className="p-4 grid w-full gap-2">
                     <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black bg-slate-200 animate-pulse p-1 rounded-full"></h2>
@@ -90,27 +87,28 @@ const HorizontalCardProduct = ({ category, heading }) => {
                     <button className="text-sm  text-white px-3 py-0.5 rounded-full w-full bg-slate-200 animate-pulse"></button>
                   </div>
                 </div>
-              ))
-            : data.map((product) => (
+              );
+            })
+          : data.map((product, index) => {
+              return (
                 <Link
-                  key={product?._id}
                   to={"product/" + product?._id}
-                  className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex overflow-hidden"
+                  className="w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow flex"
                 >
-                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] flex-shrink-0">
+                  <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px]">
                     <img
                       src={product.productImage[0]}
-                      className="object-contain h-full w-full hover:scale-110 transition-all"
+                      className="object-scale-down h-full hover:scale-110 transition-all"
                     />
                   </div>
-                  <div className="p-4 grid flex-1 overflow-hidden">
+                  <div className="p-4 grid">
                     <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black">
                       {product?.productName}
                     </h2>
                     <p className="capitalize text-slate-500">
                       {product?.category}
                     </p>
-                    <div className="flex gap-3 flex-wrap">
+                    <div className="flex gap-2 items-center">
                       <p className="text-red-600 font-medium">
                         {displayINRCurrency(product?.sellingPrice)}
                       </p>
@@ -119,15 +117,15 @@ const HorizontalCardProduct = ({ category, heading }) => {
                       </p>
                     </div>
                     <button
-                      className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full mt-auto"
+                      className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full"
                       onClick={(e) => handleAddToCart(e, product?._id)}
                     >
                       Add to Cart
                     </button>
                   </div>
                 </Link>
-              ))}
-        </div>
+              );
+            })}
       </div>
     </div>
   );
