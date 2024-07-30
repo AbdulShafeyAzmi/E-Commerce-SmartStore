@@ -4,6 +4,7 @@ const userModel = require("../../models/userModel");
 const paymentController = async (request, response) => {
   try {
     const { cartItems } = request.body;
+    // console.log(cartItems);
 
     const user = await userModel.findOne({ _id: request.userId });
 
