@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -18,9 +18,18 @@ const Header = () => {
   const context = useContext(Context);
   const navigate = useNavigate();
   const searchInput = useLocation();
+
   const URLSearch = new URLSearchParams(searchInput?.search);
-  const searchQuery = URLSearch.getAll("q");
+  const searchQuery = URLSearch.getAll("q") || "";
   const [search, setSearch] = useState(searchQuery);
+
+  // useEffect use to reset search input
+  useEffect(() => {
+    // Reset search input when the pathname changes, not when the query changes
+    if (searchInput.pathname !== "/search") {
+      setSearch("");
+    }
+  }, [searchInput.pathname]);
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryApi.logout_user.url, {
